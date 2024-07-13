@@ -1,0 +1,13 @@
+@use "./theme.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+* {
+    transition: all 0.3 ease-in-out;
+}
