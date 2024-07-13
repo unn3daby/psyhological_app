@@ -1,13 +1,11 @@
 <template>
   <div class="newtons-cradle">
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
-    <div class="newtons-cradle__dot"></div>
+    <div class="newtons-cradle__dot" />
+    <div class="newtons-cradle__dot" />
+    <div class="newtons-cradle__dot" />
+    <div class="newtons-cradle__dot" />
   </div>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped>
 .newtons-cradle {
@@ -81,5 +79,4 @@
   animation-timing-function: ease-in;
  }
 }
-
 </style>

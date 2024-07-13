@@ -7,26 +7,14 @@
     >
       {{ item.title }}
       <div
-        class="
-          tw-absolute
-          tw--bottom-1
-          tw-left-0
-          tw-w-full
-          tw-h-px
-          tw-bg-white
-          tw-scale-x-0
-          group-hover:tw-scale-x-100
-          tw-origin-left
-          tw-transition-transform
-          tw-duration-300
-        "
-      ></div>
+        class="tw-absolute tw--bottom-1 tw-left-0 tw-w-full tw-h-px tw-bg-white tw-scale-x-0 group-hover:tw-scale-x-100 tw-origin-left tw-transition-transform tw-duration-300"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import menu from "./menu";
+import menu from './menu'
 </script>
 
 <style scoped lang="scss">

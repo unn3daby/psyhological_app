@@ -1,5 +1,5 @@
 <template>
-<div>ПРивет</div>
+  <div>ПРивет</div>
 </template>
 
 <script lang="ts" setup>

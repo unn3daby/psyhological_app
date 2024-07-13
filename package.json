@@ -1,13 +1,15 @@
 {
   "name": "nuxt-app",
-  "private": true,
   "type": "module",
+  "private": true,
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
@@ -19,8 +21,14 @@
     "vue": "latest"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.22.2",
+    "@nuxt/eslint": "^0.3.13",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
     "autoprefixer": "^10.4.19",
+    "eslint": "^9.7.0",
     "postcss": "^8.4.39",
-    "sass": "^1.77.6"
+    "prettier": "^3.3.2",
+    "sass": "^1.77.6",
+    "typescript": "^5.5.3"
   }
 }

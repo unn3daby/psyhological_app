@@ -1,39 +1,43 @@
 <template>
-<form class="form">
-    <p class="message q-mb-md">Для доступа к функциям приложения зарегистрируйтесь. </p>
-        <div class="flex">
-        <label>
-            <input class="input" type="text" placeholder="" required>
-            <span>Фамилия</span>
-        </label>
+  <form class="form">
+    <p class="message q-mb-md">
+      Для доступа к функциям приложения зарегистрируйтесь.
+    </p>
+    <div class="flex">
+      <label>
+        <input class="input" type="text" placeholder="" required>sss
+        <span>Фамилия</span>
+      </label>
 
-        <label>
-            <input class="input" type="text" placeholder="" required>
-            <span>Имя</span>
-        </label>
-    </div>  
-            
+      <label>
+        <input class="input" type="text" placeholder="" required>
+        <span>Имя</span>
+      </label>
+    </div>
+
     <label>
-        <input class="input" type="email" placeholder="" required>
-        <span>Email</span>
-    </label> 
-        
+      <input class="input" type="email" placeholder="" required>
+      <span>Email</span>
+    </label>
+
     <label>
-        <input class="input" type="password" placeholder="" required>
-        <span>Пароль</span>
+      <input class="input" type="password" placeholder="" required>
+      <span>Пароль</span>
     </label>
     <label>
-        <input class="input" type="password" placeholder="" required>
-        <span>Подтверждение пароля</span>
+      <input class="input" type="password" placeholder="" required>
+      <span>Подтверждение пароля</span>
     </label>
-    <button class="submit">Зарегистрироваться</button>
-    <p class="signin">Уже есть аккаунт? <a href="#">Войти</a> </p>
-</form>
+    <button class="submit">
+      Зарегистрироваться
+    </button>
+    <p class="signin">
+      Уже есть аккаунт? <a href="#">Войти</a>
+    </p>
+  </form>
 </template>
 
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts" />
 
 <style scoped lang="scss">
 .form {
@@ -82,7 +86,7 @@
   background-color: #00bfff;
 }
 
-.message, 
+.message,
 .signin {
   font-size: 14.5px;
   color: rgba(255, 255, 255, 0.7);
@@ -154,7 +158,7 @@
   border-radius: 10px;
   color: #fff;
   font-size: 16px;
-  transform: .3s ease;
+  transform: 0.3s ease;
   background-color: #00bfff;
 }
 
