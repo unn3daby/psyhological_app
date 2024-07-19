@@ -1,10 +1,11 @@
-import antfu from '@antfu/eslint-config'
+import antfu from '@antfu/eslint-config';
 
 export default antfu({
   // Enable stylistic formatting rules
   stylistic: {
     indent: 2, // 4, or 'tab'
     quotes: 'single', // or 'double'
+    semi: true,
   },
   rules: {
     'vue/block-order': ['error', {
@@ -16,4 +17,4 @@ export default antfu({
     '**/fixtures',
     // ...globs
   ],
-})
+});

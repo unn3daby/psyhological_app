@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import menu from './menu'
+import menu from './menu';
 </script>
 
 <style scoped lang="scss">

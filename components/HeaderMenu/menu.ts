@@ -17,4 +17,4 @@ export default [
     to: '/data',
     id: 2,
   },
-]
+];

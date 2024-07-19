@@ -1,5 +1,5 @@
 <template>
- <q-layout ref="layoutRef" view="lHh lpr lFf" container class="tw-h-screen">
+  <q-layout view="lHh lpr lFf" container class="tw-h-screen">
     <q-page-container>
       <q-page class="q-pa-md tw-h-px">
         <slot />
