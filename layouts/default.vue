@@ -14,7 +14,7 @@
         <HeaderMenu />
         <div />
         <q-space />
-        <q-avatar class="tw-bg-green-500">
+        <q-avatar class="tw-bg-green-500" @click="signOut">
           MI
         </q-avatar>
       </q-toolbar>
@@ -31,6 +31,8 @@
 const headerClass = ref<string | null>(null);
 const layoutRef = ref();
 const headerTriggerRef = ref<null | HTMLDivElement>(null);
+
+const { signOut } = useAuth();
 
 function hideHeaderByScroll({ direction, position: { top } }: any) {
   if (direction === 'down' && top > 100) {

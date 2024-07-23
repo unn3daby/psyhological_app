@@ -1,9 +1,13 @@
 <template>
-  <div>ПРивет</div>
+  <div>{{ auth }}</div>
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  middleware: 'auth',
+});
 
+const auth = useAuth();
 </script>
 
 <style>

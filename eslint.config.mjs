@@ -8,13 +8,13 @@ export default antfu({
     semi: true,
   },
   rules: {
-    'vue/block-order': ['error', {
-      order: ['template', 'script', 'style'],
-    }],
+    'vue/block-order': [
+      'error',
+      {
+        order: ['template', 'script', 'style'],
+      },
+    ],
   },
   // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
-  ignores: [
-    '**/fixtures',
-    // ...globs
-  ],
+  ignores: ['**/fixtures'],
 });
