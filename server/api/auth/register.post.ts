@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     statusCode: 200,
-    body: {
+    data: {
       message: 'User created successfully',
       user: newUser,
     },
