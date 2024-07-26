@@ -48,8 +48,6 @@
 </template>
 
 <script setup lang="ts">
-const { signIn } = useAuth();
-
 const credentials = reactive({
   name: '',
   email: '',
@@ -57,14 +55,10 @@ const credentials = reactive({
 });
 
 async function auth(email: string, password: string) {
-  const response = await signIn('credentials', { redirect: false, email, password });
+  /* const response = await useApi('/api/auth/auth', { body: { email, password } });
 
-  if (response?.error) {
-    console.log(response.error, 'error');
-    return;
-  }
-
-  await navigateTo({ path: '/' });
+  await navigateTo({ path: '/' }); */
+  const response = await useApi('/api/auth/refresh', { method: 'POST' });
 }
 </script>
 

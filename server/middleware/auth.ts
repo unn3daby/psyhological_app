@@ -16,7 +16,7 @@ export default eventHandler(async (event) => {
   const headers = getHeaders(event);
 
   if (!headers.authorization) {
-    throw createError({ statusMessage: 'Forbidden', statusCode: 403 });
+    throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
   }
 
   const [authType, token] = headers.authorization.split(' ');

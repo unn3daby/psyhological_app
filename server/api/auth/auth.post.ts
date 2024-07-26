@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
 
   if (!(findedUser && findedUser.password && findedUser.username)) {
     throw createError({
-      statusCode: 400,
+      statusCode: 403,
       statusMessage: 'Username or password is not correct',
     });
   }
@@ -33,7 +33,7 @@ export default defineEventHandler(async (event) => {
 
   if (!isPasswordValid) {
     throw createError({
-      statusCode: 400,
+      statusCode: 403,
       statusMessage: 'Username or password is not correct',
     });
   }

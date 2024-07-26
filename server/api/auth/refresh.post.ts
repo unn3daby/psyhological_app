@@ -13,7 +13,17 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { accessToken } = await readBody<Record<string, string>>(event);
+  const headers = getHeaders(event);
+
+  if (!headers.authorization) {
+    throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
+  }
+
+  const [authType, accessToken] = headers.authorization.split(' ');
+
+  if (authType.toLowerCase() !== 'bearer') {
+    throw createError({ statusMessage: `Auth type ${authType} is not supported`, statusCode: 400 });
+  }
 
   try {
     jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
@@ -47,8 +57,8 @@ export default defineEventHandler(async (event) => {
 
   if (!refreshToken) {
     throw createError({
-      statusCode: 403,
-      message: 'Forbidden',
+      statusCode: 401,
+      message: 'Unauthorized',
     });
   }
 

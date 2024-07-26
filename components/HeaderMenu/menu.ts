@@ -15,6 +15,6 @@ export default [
     name: 'data',
     title: 'Данные',
     to: '/data',
-    id: 2,
+    id: 3,
   },
 ];

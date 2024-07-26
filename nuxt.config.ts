@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   runtimeConfig: {
     authSecret: process.env.AUTH_SECRET,
+    baseURL: process.env.BASE_URL,
   },
   devtools: { enabled: true },
   modules: [
@@ -11,6 +12,7 @@ export default defineNuxtConfig({
     '@formkit/auto-animate',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
+    '@vueuse/nuxt',
   ],
   css: ['~/assets/scss/main.scss'],
 });
