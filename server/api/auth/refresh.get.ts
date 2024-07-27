@@ -13,16 +13,10 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const headers = getHeaders(event);
+  const accessToken = getCookie(event, 'accessToken');
 
-  if (!headers.authorization) {
+  if (!accessToken) {
     throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
-  }
-
-  const [authType, accessToken] = headers.authorization.split(' ');
-
-  if (authType.toLowerCase() !== 'bearer') {
-    throw createError({ statusMessage: `Auth type ${authType} is not supported`, statusCode: 400 });
   }
 
   try {
@@ -63,43 +57,58 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const decoded = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+    const verifiedToken = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
 
-    if (typeof decoded === 'string') {
+    if (typeof verifiedToken === 'string') {
       throw createError({ statusMessage: 'Error with parsing jwt', statusCode: 500 });
     }
 
-    const refreshJti = uuid.v4();
-
-    const accessToken = jwt.sign({ userId: decoded.userId, jti: uuid.v4() }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
-    const newRefreshToken = jwt.sign({ userId: decoded.userId, jti: refreshJti }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
-
-    prisma.refreshTokens.delete({
-      where: { jti: decoded.jti },
+    const findedRefresh = await prisma.refreshTokens.findUnique({
+      where: { jti: verifiedToken.jti },
     });
 
-    prisma.refreshTokens.create({
+    if (!findedRefresh || findedRefresh.RefreshToken !== refreshToken) {
+      throw createError({
+        statusCode: 401,
+        message: 'Invalid refresh token',
+      });
+    }
+
+    await prisma.refreshTokens.delete({
+      where: { jti: verifiedToken.jti },
+    });
+
+    const refreshJti = uuid.v4();
+
+    const accessToken = jwt.sign({ userId: verifiedToken.userId, jti: uuid.v4() }, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
+    const newRefreshToken = jwt.sign({ userId: verifiedToken.userId, jti: refreshJti }, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+
+    await prisma.refreshTokens.create({
       data: {
-        userId: decoded.userId,
+        userId: verifiedToken.userId,
         jti: refreshJti,
         RefreshToken: newRefreshToken,
       },
     });
 
+    setCookie(event, 'refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'lax' });
+    setCookie(event, 'accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'lax' });
+
     return {
       statusCode: 200,
-      body: {
-        message: 'Refreshed successfully',
-        data: {
-          accessToken,
-          newRefreshToken,
-        },
-      },
+      message: 'Refreshed successfully',
     };
   }
   catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
-      throw createError({ statusMessage: 'Forbidden', statusCode: 403 });
+      const decoded = jwt.decode(refreshToken);
+      if (typeof decoded === 'string') {
+        throw createError({ statusMessage: 'Unauthorised', statusCode: 401 });
+      }
+      await prisma.refreshTokens.delete({
+        where: { jti: decoded?.jti },
+      });
+      throw createError({ statusMessage: 'Unauthorised', statusCode: 401 });
     }
     else if (error instanceof jwt.JsonWebTokenError) {
       throw createError({ statusMessage: 'Unauthorised', statusCode: 401 });

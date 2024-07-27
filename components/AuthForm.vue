@@ -18,12 +18,12 @@
       </label>
     </div>
 
-    <label v-if="$route.query.type === 'reg'">
-      <input v-model="credentials.name" class="input" placeholder="" required>
+    <label>
+      <input v-model="credentials.username" class="input" placeholder="" required>
       <span>Имя пользователя</span>
     </label>
 
-    <label>
+    <label v-if="$route.query.type === 'reg'">
       <input v-model="credentials.email" class="input" placeholder="" required>
       <span>Электронная почта</span>
     </label>
@@ -36,7 +36,7 @@
       <input class="input" type="password" placeholder="" required>
       <span>Подтверждение пароля</span>
     </label>
-    <button class="submit" @click="auth(credentials.email, credentials.password)">
+    <button class="submit" @click="login">
       {{ $route.query.type === 'reg' ? 'Зарегистрироваться' : 'Войти' }}
     </button>
     <p class="signin cursor-pointer">
@@ -48,17 +48,20 @@
 </template>
 
 <script setup lang="ts">
+const router = useRouter();
+
 const credentials = reactive({
-  name: '',
+  username: '',
   email: '',
   password: '',
 });
 
-async function auth(email: string, password: string) {
-  /* const response = await useApi('/api/auth/auth', { body: { email, password } });
+const store = useAuthStore();
 
-  await navigateTo({ path: '/' }); */
-  const response = await useApi('/api/auth/refresh', { method: 'POST' });
+async function login() {
+  await store.login(credentials.username, credentials.password);
+  await store.getProfile();
+  await router.push('/');
 }
 </script>
 

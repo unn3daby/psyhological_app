@@ -48,6 +48,20 @@ export default defineEventHandler(async (event) => {
     jti: uuid.v4(),
   };
 
+  const userTokens = await prisma.refreshTokens.findMany({
+    where: {
+      userId: findedUser.id,
+    },
+  });
+
+  if (userTokens.length >= 5) {
+    await prisma.refreshTokens.delete({
+      where: {
+        jti: userTokens[0].jti,
+      },
+    });
+  }
+
   const accessToken = jwt.sign(accessPayload, ACCESS_TOKEN_SECRET, { expiresIn: '15m' });
   const refreshToken = jwt.sign(refreshPayload, REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
 
@@ -59,16 +73,11 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  setCookie(event, 'refreshToken', refreshToken, { httpOnly: true/* , secure: true, sameSite: 'strict'  */ });
+  setCookie(event, 'refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'lax' });
+  setCookie(event, 'accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'lax' });
 
   return {
     statusCode: 200,
-    body: {
-      message: 'User authorized successfully',
-      data: {
-        accessToken,
-        refreshToken,
-      },
-    },
+    message: 'User authorized successfully',
   };
 });

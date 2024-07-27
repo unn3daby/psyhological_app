@@ -1,20 +1,21 @@
 import jwt from 'jsonwebtoken';
 
 export default defineEventHandler(async (event) => {
-  const headers = getHeaders(event);
+  const accessToken = getCookie(event, 'accessToken');
 
-  if (!headers.authorization) {
-    throw createError({ statusMessage: 'Unauhorized', statusCode: 401 });
+  if (!accessToken) {
+    throw createError({
+      statusCode: 403,
+      message: 'Forbidden',
+    });
   }
 
-  const [_, token] = headers.authorization.split(' ');
-
-  const decoded = jwt.decode(token);
+  const decoded = jwt.decode(accessToken);
 
   if (typeof decoded === 'string') {
     throw createError({
       statusCode: 500,
-      message: 'Error with JWT decoding',
+      message: 'Error with JWT',
     });
   }
 

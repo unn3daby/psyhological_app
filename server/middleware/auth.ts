@@ -13,27 +13,21 @@ export default eventHandler(async (event) => {
     throw createError({ statusMessage: 'Error with JWT', statusCode: 500 });
   }
 
-  const headers = getHeaders(event);
+  const accessToken = getCookie(event, 'accessToken');
 
-  if (!headers.authorization) {
-    throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
-  }
-
-  const [authType, token] = headers.authorization.split(' ');
-
-  if (authType.toLowerCase() !== 'bearer') {
-    throw createError({ statusMessage: `Auth type ${authType} is not supported`, statusCode: 400 });
+  if (!accessToken) {
+    throw createError({ statusMessage: 'Forbidden', statusCode: 403 });
   }
 
   try {
-    jwt.verify(token, ACCESS_TOKEN_SECRET);
+    jwt.verify(accessToken, ACCESS_TOKEN_SECRET);
   }
   catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
       throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
     }
     else if (error instanceof jwt.JsonWebTokenError) {
-      throw createError({ statusMessage: 'Unauthorized', statusCode: 401 });
+      throw createError({ statusMessage: 'Forbidden', statusCode: 403 });
     }
     else {
       throw createError({ statusMessage: 'Unexpected error with auth', statusCode: 500 });

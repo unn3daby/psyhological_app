@@ -2,11 +2,11 @@ import process from 'node:process';
 
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
-  runtimeConfig: {
-    authSecret: process.env.AUTH_SECRET,
-    baseURL: process.env.BASE_URL,
-  },
   devtools: { enabled: true },
+  runtimeConfig: {
+    baseUrl: process.env.BASE_PATH,
+  },
+  ssr: false,
   modules: [
     'nuxt-quasar-ui',
     '@formkit/auto-animate',
