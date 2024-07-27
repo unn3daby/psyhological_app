@@ -1,9 +1,9 @@
 <template>
-  <div>ПРивет</div>
+  <div>{{ store.user }}</div>
 </template>
 
 <script lang="ts" setup>
-
+const store = useAuthStore();
 </script>
 
 <style>

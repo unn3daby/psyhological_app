@@ -1,43 +1,69 @@
 <template>
-  <form class="form">
-    <p class="message q-mb-md">
+  <div class="form">
+    <p v-if="$route.query.type === 'reg'" class="message text-center q-mb-md">
       Для доступа к функциям приложения зарегистрируйтесь.
     </p>
-    <div class="flex">
-      <label>
-        <input class="input" type="text" placeholder="" required>sss
+    <p v-else class="message text-center q-mb-md">
+      Для доступа к функциям приложения войдите в аккаунт.
+    </p>
+    <div v-if="$route.query.type === 'reg'" class="row">
+      <label class="col-6 q-pr-xs">
+        <input class="input" type="text" placeholder="" required>
         <span>Фамилия</span>
       </label>
 
-      <label>
+      <label class="col-6 q-pl-xs">
         <input class="input" type="text" placeholder="" required>
         <span>Имя</span>
       </label>
     </div>
 
     <label>
-      <input class="input" type="email" placeholder="" required>
-      <span>Email</span>
+      <input v-model="credentials.username" class="input" placeholder="" required>
+      <span>Имя пользователя</span>
+    </label>
+
+    <label v-if="$route.query.type === 'reg'">
+      <input v-model="credentials.email" class="input" placeholder="" required>
+      <span>Электронная почта</span>
     </label>
 
     <label>
-      <input class="input" type="password" placeholder="" required>
+      <input v-model="credentials.password" class="input" type="password" placeholder="" required>
       <span>Пароль</span>
     </label>
-    <label>
+    <label v-if="$route.query.type === 'reg'">
       <input class="input" type="password" placeholder="" required>
       <span>Подтверждение пароля</span>
     </label>
-    <button class="submit">
-      Зарегистрироваться
+    <button class="submit" @click="login">
+      {{ $route.query.type === 'reg' ? 'Зарегистрироваться' : 'Войти' }}
     </button>
-    <p class="signin">
-      Уже есть аккаунт? <a href="#">Войти</a>
+    <p class="signin cursor-pointer">
+      Еще нет аккаунта? <a @click="$router.push({ path: $route.path, query: { type: $route.query.type ? undefined : 'reg' } })">
+        {{ $route.query.type === 'reg' ? 'Войти' : 'Зарегистрироваться' }}
+      </a>
     </p>
-  </form>
+  </div>
 </template>
 
-<script setup lang="ts" />
+<script setup lang="ts">
+const router = useRouter();
+
+const credentials = reactive({
+  username: '',
+  email: '',
+  password: '',
+});
+
+const store = useAuthStore();
+
+async function login() {
+  await store.login(credentials.username, credentials.password);
+  await store.getProfile();
+  await router.push('/');
+}
+</script>
 
 <style scoped lang="scss">
 .form {
@@ -45,6 +71,7 @@
   flex-direction: column;
   gap: 10px;
   max-width: 850px;
+  min-width: 500px;
   padding: 20px;
   border-radius: 20px;
   position: relative;

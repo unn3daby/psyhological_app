@@ -30,7 +30,7 @@
 <script lang="ts" setup>
 const headerClass = ref<string | null>(null);
 const layoutRef = ref();
-const headerTriggerRef = ref<null | HTMLDivElement>(null);
+const headerTriggerRef = ref<null | HTMLDivElement>(null); ;
 
 function hideHeaderByScroll({ direction, position: { top } }: any) {
   if (direction === 'down' && top > 100) {
