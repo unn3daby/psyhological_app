@@ -5,8 +5,8 @@ export default defineEventHandler(async (event) => {
 
   if (!accessToken) {
     throw createError({
-      statusCode: 403,
-      message: 'Forbidden',
+      statusCode: 401,
+      message: 'Unauthorized',
     });
   }
 

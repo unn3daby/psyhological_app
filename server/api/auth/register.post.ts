@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'Missing required fields',
-      stack: undefined,
     });
   }
 
@@ -24,7 +23,6 @@ export default defineEventHandler(async (event) => {
     throw createError({
       statusCode: 400,
       statusMessage: 'User already exists',
-      stack: undefined,
     });
   }
 
@@ -38,9 +36,7 @@ export default defineEventHandler(async (event) => {
 
   return {
     statusCode: 200,
-    data: {
-      message: 'User created successfully',
-      user: newUser,
-    },
+    message: 'User created successfully',
+    data: { newUser, password: undefined },
   };
 });
