@@ -6,21 +6,23 @@
     />
     <q-scroll-observer @scroll="hideHeaderByScroll" />
     <q-header
-      class="header row items-center bg-secondary tw-transition-all tw-rounded-b-lg tw-ease-in-out tw-delay-150 tw-h-20"
+      class="header row items-center tw-justify-center bg-secondary tw-transition-all tw-rounded-b-lg tw-ease-in-out tw-delay-150 tw-h-20"
       :class="headerClass"
     >
-      <q-toolbar>
-        <q-avatar class="tw-bg-white" />
+      <q-toolbar class="tw-max-w-screen-3xl">
+        <q-avatar class="tw-bg-white cursor-pointer" @click="$router.push('/')" />
         <HeaderMenu />
-        <div />
+        <div class="tw-flex-grow tw-relative">
+          <CustomInput v-model="search" dense class="tw-transition-all" :class="searchClass" />
+        </div>
         <q-space />
         <q-avatar class="tw-bg-green-500">
-          MI
+          {{ 'VM' }}
         </q-avatar>
       </q-toolbar>
     </q-header>
     <q-page-container>
-      <q-page class="q-pa-md">
+      <q-page class="q-pa-md q-pt-xl">
         <slot />
       </q-page>
     </q-page-container>
@@ -28,11 +30,22 @@
 </template>
 
 <script lang="ts" setup>
+import CustomInput from '~/components/CustomInput.vue';
+
 const headerClass = ref<string | null>(null);
+const searchClass = ref<string | null>(null);
 const layoutRef = ref();
-const headerTriggerRef = ref<null | HTMLDivElement>(null); ;
+const headerTriggerRef = ref<null | HTMLDivElement>(null);
+
+const search = ref('');
 
 function hideHeaderByScroll({ direction, position: { top } }: any) {
+  if (top <= 0) {
+    searchClass.value = 'custom-translate';
+  }
+  else {
+    searchClass.value = '';
+  }
   if (direction === 'down' && top > 100) {
     headerClass.value = 'tw--translate-y-full';
   }
@@ -49,6 +62,10 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
+.custom-translate {
+  transform: translateY(80px);
+  height: 50px;
+}
 .header {
   backdrop-filter: blur(2px);
   background: rgba(26, 26, 26, 0.5);
