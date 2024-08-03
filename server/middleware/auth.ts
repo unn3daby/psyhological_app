@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 export default eventHandler(async (event) => {
   // Protect all API endpoints inside protected
-  if (!event.node.req.url?.startsWith('/api/protected')) {
+  if (!event.node.req.url?.startsWith('/api/v1/protected')) {
     return;
   }
 

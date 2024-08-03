@@ -5,10 +5,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function login(username: string, password: string) {
     try {
-      await api<{ data: Record<string, string> }>('/api/auth/auth', { method: 'POST', body: { username, password } });
+      await api<{ data: Record<string, string> }>('/api/v1/auth/auth', { method: 'POST', body: { username, password } });
     }
     catch (error) {
-      console.error(error);
+      return Promise.reject(error);
     }
   }
 
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   async function getProfile() {
     try {
-      const { data } = await api<{ data: Record<string, string> }>('/api/protected/profile');
+      const { data } = await api<{ data: Record<string, string> }>('/api/v1/protected/profile');
       user.value = data;
     }
     catch (error) {

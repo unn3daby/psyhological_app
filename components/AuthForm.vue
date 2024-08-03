@@ -59,9 +59,14 @@ const credentials = reactive({
 const store = useAuthStore();
 
 async function login() {
-  await store.login(credentials.username, credentials.password);
-  await store.getProfile();
-  await router.push('/');
+  try {
+    await store.login(credentials.username, credentials.password);
+    await store.getProfile();
+    await router.push('/');
+  }
+  catch (error) {
+    console.error(error);
+  }
 }
 </script>
 

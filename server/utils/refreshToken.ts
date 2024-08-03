@@ -1,7 +1,12 @@
 import type { H3Event } from 'h3';
+import type { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import * as uuid from 'uuid';
 import verifyToken from './verifyToken';
+
+interface TokenPayload extends JwtPayload {
+  userId: number;
+}
 
 export default function refreshToken(event: H3Event, accessTokenSecret: string, refreshTokenSecret: string) {
   const accessToken = getCookie(event, 'accessToken');
@@ -18,7 +23,6 @@ export default function refreshToken(event: H3Event, accessTokenSecret: string, 
 
   if (error === 'TokenExpiredError') {
     // Verify refresh-token
-
     const { error } = verifyToken(refreshToken, refreshTokenSecret);
 
     if (error) {
@@ -32,10 +36,22 @@ export default function refreshToken(event: H3Event, accessTokenSecret: string, 
     const [accessTokenJti, refreshTokenJti] = [uuid.v4(), uuid.v4()];
 
     const newAccessToken = jwt.sign({ userId: accessDecoded.userId, jti: accessTokenJti }, accessTokenSecret, { expiresIn: '5s' });
-    const newRefreshToken = jwt.sign({ userId: accessDecoded.userId, jti: refreshTokenJti }, refreshTokenSecret, { expiresIn: '10s' });
+    const newRefreshToken = jwt.sign({ userId: accessDecoded.userId, jti: refreshTokenJti }, refreshTokenSecret, { expiresIn: '14d' });
+    ;
+    const refreshTokenExpiresIn = (jwt.decode(newRefreshToken) as TokenPayload).exp! * 1000;
 
-    setCookie(event, 'accessToken', newAccessToken, { httpOnly: true, secure: true, sameSite: 'lax' });
-    setCookie(event, 'refreshToken', newRefreshToken, { httpOnly: true, secure: true, sameSite: 'lax' });
+    setCookie(event, 'refreshToken', refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      expires: new Date(refreshTokenExpiresIn),
+    });
+
+    setCookie(event, 'accessToken', accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+    });
 
     return {
       accessToken: {
