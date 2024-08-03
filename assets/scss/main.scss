@@ -4,10 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+* {
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  transition: all 0.3 ease-in-out;
 }
 
-* {
-    transition: all 0.3 ease-in-out;
+::selection {
+  background: rgb(36, 36, 36);
+  color: white; /* Цвет текста при выделении */
+}
+
+/* Для Firefox */
+::-moz-selection {
+  background: rgb(36, 36, 36);
+  color: white; /* Цвет текста при выделении */
 }

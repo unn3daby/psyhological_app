@@ -4,7 +4,9 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   runtimeConfig: {
-    baseUrl: process.env.BASE_PATH,
+    public: {
+      baseUrl: process.env.BASE_PATH,
+    },
   },
   ssr: false,
   modules: [
@@ -14,5 +16,5 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@vueuse/nuxt',
   ],
-  css: ['~/assets/scss/main.scss'],
+  css: ['~/assets/scss/main.scss', '~/assets/scss/fonts.scss'],
 });

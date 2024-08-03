@@ -8,7 +8,7 @@ interface FetchResponseError {
 
 export function useApi() {
   const api = $fetch.create({
-    baseURL: useRuntimeConfig().baseUrl || 'http://localhost:3000',
+    baseURL: useRuntimeConfig().public.baseUrl || 'http://localhost:3000',
     async onResponseError({ request, response, options }: FetchResponseError) {
       if (response.status === 401) {
         try {
@@ -16,7 +16,6 @@ export function useApi() {
           return $fetch(request.url, { ...options, onResponseError: undefined });
         }
         catch (error) {
-          console.error(error);
           return Promise.reject(error);
         }
       }

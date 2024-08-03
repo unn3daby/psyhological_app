@@ -3,12 +3,11 @@
     <div
       v-for="item in menu"
       :key="item.id"
-      class="tw-relative tw-group cursor-pointer"
+      class="hover:tw-bg-gray-700 tw-px-4 cursor-pointer tw-py-2.5 tw-rounded-md tw-transition-colors"
+      :class="{ 'tw-bg-gray-700': $route.name === item.to || $route.path === item.to }"
+      @click="$router.push(item.to)"
     >
       {{ item.title }}
-      <div
-        class="tw-absolute tw--bottom-1 tw-left-0 tw-w-full tw-h-px tw-bg-white tw-scale-x-0 group-hover:tw-scale-x-100 tw-origin-left tw-transition-transform tw-duration-300"
-      />
     </div>
   </div>
 </template>
@@ -18,18 +17,4 @@ import menu from './headerMenuData';
 </script>
 
 <style scoped lang="scss">
-.menu__item {
-  position: relative;
-  cursor: pointer;
-  &:hover {
-    &::after {
-      content: "";
-      width: 100%;
-      height: 1px;
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-    }
-  }
-}
 </style>

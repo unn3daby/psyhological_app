@@ -6,16 +6,16 @@
     />
     <q-scroll-observer @scroll="hideHeaderByScroll" />
     <q-header
-      class="header row items-center bg-secondary tw-transition-all tw-rounded-b-lg tw-ease-in-out tw-delay-150 tw-h-20"
+      class="header row items-center tw-justify-center bg-secondary tw-transition-all tw-rounded-b-lg tw-ease-in-out tw-delay-150 tw-h-20"
       :class="headerClass"
     >
-      <q-toolbar>
-        <q-avatar class="tw-bg-white" />
+      <q-toolbar class="tw-max-w-screen-3xl">
+        <q-avatar class="tw-bg-white cursor-pointer" @click="$router.push('/')" />
         <HeaderMenu />
         <div />
         <q-space />
         <q-avatar class="tw-bg-green-500">
-          MI
+          {{ 'VM' }}
         </q-avatar>
       </q-toolbar>
     </q-header>
