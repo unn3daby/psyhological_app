@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   postgres:
@@ -35,21 +35,19 @@ services:
     image: redis:latest
     container_name: redis
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT:-6379}:6379"
     networks: 
       - redis
     volumes:
       - redis-data:/data
 
-  redis-commander:
-    image: rediscommander/redis-commander:latest
-    container_name: redis-commander
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
     ports:
-      - "8081:8081"
+      - "5540:5540"
     networks: 
       - redis
-    environment:
-      - REDIS_HOSTS=redis
 
 networks:
   postgres:
@@ -60,4 +58,4 @@ networks:
 volumes:
     postgres:
     pgadmin:
-    redis-data: 
+    redis-data:

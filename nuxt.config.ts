@@ -9,12 +9,37 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
+  nitro: {
+    storage: {
+      redis: {
+        driver: 'redis',
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
+        db: 0,
+      },
+    },
+  },
   modules: [
-    'nuxt-quasar-ui',
     '@formkit/auto-animate',
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
     '@vueuse/nuxt',
+    '@primevue/nuxt-module',
+    '@nuxt/icon',
   ],
   css: ['~/assets/scss/main.scss'],
+  primevue: {
+    autoImport: true,
+    usePrimeVue: true,
+    importTheme: { from: '@/theme.ts' },
+    options: {
+      ripple: true,
+    },
+    components: {
+      prefix: 'P',
+    },
+    directives: {
+      prefix: 'p',
+    },
+  },
 });

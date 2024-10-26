@@ -1,20 +1,14 @@
 export default [
   {
-    name: 'experements',
-    title: 'Эксперементы',
-    to: '/experements',
+    name: 'calculations',
+    title: 'Расчеты',
+    to: '/calculations',
     id: 1,
-  },
-  {
-    name: 'library',
-    title: 'Библиотека',
-    to: '/library',
-    id: 2,
   },
   {
     name: 'data',
     title: 'Данные',
     to: '/data',
-    id: 3,
+    id: 2,
   },
 ];

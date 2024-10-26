@@ -8,9 +8,6 @@ module.exports = {
     './app.vue',
     './error.vue',
   ],
-  theme: {
-    extend: {},
-  },
-  prefix: 'tw-',
-  plugins: [],
+  darkMode: 'selector',
+  plugins: [require('tailwindcss-primeui')],
 };

@@ -1,5 +1,5 @@
-@use "./theme.scss";
 @use "./fonts.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,5 +7,23 @@
 * {
   font-family: Montserrat, sans-serif;
   font-size: 14px;
+  font-weight: 500;
 }
 
+:root {
+  --bg-color: var(--p-primary-100);
+}
+
+:root[class="dark"] {
+  --bg-color: var(--p-primary-800);
+}
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-color);
+}

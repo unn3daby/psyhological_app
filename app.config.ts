@@ -1,9 +1,7 @@
 export default defineAppConfig({
-  nuxtQuasar: {
-    brand: {
-      primary: 'rgba(36,36,36, 0.5)',
-      secondary: 'rgba(26, 26, 26, 0.5)',
-      churka: 'red',
-    },
+  icon: {
+    size: '24px', // default <Icon> size applied
+    class: 'icon', // default <Icon> class applied
+    mode: 'css', // default <Icon> mode applied
   },
 });

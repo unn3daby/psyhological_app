@@ -1,14 +1,14 @@
 <template>
-  <div class="row q-mx-xl items-center nowrap tw-gap-5">
-    <div
+  <div class="flex justify-center q-mx-xl items-center nowrap gap-5">
+    <p-button
       v-for="item in menu"
       :key="item.id"
-      class="btns-filter hover:tw-bg-blue-400 tw-px-4 cursor-pointer tw-py-2.5 tw-rounded-md tw-transition-colors"
-      :class="{ 'tw-bg-blue-400': $route.name === item.to || $route.path === item.to }"
+      size="small"
+      :severity="$route.name === item.to || $route.name === item.name ? 'primary' : 'secondary'"
       @click="$router.push(item.to)"
     >
       {{ item.title }}
-    </div>
+    </p-button>
   </div>
 </template>
 
@@ -17,7 +17,5 @@ import menu from './headerMenuData';
 </script>
 
 <style scoped lang="scss">
-.btns-filter{
-  backdrop-filter: blur(1px);
-}
+
 </style>

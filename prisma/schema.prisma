@@ -15,17 +15,7 @@ model Users {
   username      String?         @unique
   email         String?         @unique
   password      String?
-  image         String?
+  avatar        String?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  refreshTokens RefreshTokens[]
-}
-
-model RefreshTokens {
-  id           Int    @id @default(autoincrement())
-  jti          String @unique
-  userId       String
-  RefreshToken String
-
-  user Users @relation(fields: [userId], references: [id])
 }
